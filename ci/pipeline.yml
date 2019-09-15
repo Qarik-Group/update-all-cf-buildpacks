@@ -22,6 +22,7 @@ groups:
   - go-buildpack
   - nginx-buildpack
   - nodejs-buildpack
+  - php-buildpack
   - ruby-buildpack
   - java-buildpack
 
@@ -146,6 +147,30 @@ jobs:
       rebase: true
       repository: pushme
 
+- name: php-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: php-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: php-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: php-buildpack
+        BUILDPACK_NAME: php_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
+
 - name: ruby-buildpack
   serial: true
   plan:
@@ -239,6 +264,14 @@ resources:
   source:
     owner: cloudfoundry
     repository: nodejs-buildpack
+    access_token: (( grab meta.github.access_token ))
+
+- name: php-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: php-buildpack
     access_token: (( grab meta.github.access_token ))
 
 - name: ruby-buildpack
