@@ -34,7 +34,7 @@ echo "Checking for cflinuxfs3 updates..."
 buildpack_names=$(echo "${cflinuxfs3_buildpacks}" | jq -r "keys | .[]")
 for buildpack_name in $buildpack_names; do
   current_filename=$(cfbuildpacks | grep $buildpack_name | awk '{print $5}')
-  if [[ ! -z $current_filename ]]; then
+  if [[ -n $current_filename ]]; then
     new_buildpack_url=$(echo "$cflinuxfs3_buildpacks" | jq -r --arg buildpack_name $buildpack_name '.[$buildpack_name]')
     new_buildpack_filename=$(basename $new_buildpack_url)
     if [[ "$current_filename" != "$new_buildpack_filename" ]]; then
