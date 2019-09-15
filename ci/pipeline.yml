@@ -14,6 +14,11 @@ meta:
     branch:       master
     private_key:  (( param "Please generate an SSH Deployment Key for this repo and specify it here" ))
     access_token: (( param "Please generate a Personal Access Token and specify it here (read-only for repos, to avoid rate limiting)" ))
+groups:
+- name: update-all-cf-buildpacks
+  jobs:
+  - go-buildpack
+  - ruby-buildpack
 
 jobs:
 - name: go-buildpack
@@ -39,6 +44,30 @@ jobs:
     params:
       rebase: true
       repository: pushme
+
+- name: ruby-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: ruby-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: ruby-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: ruby-buildpack
+        BUILDPACK_NAME: ruby_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
 resources:
 - name: git
   type: git
@@ -53,4 +82,12 @@ resources:
   source:
     owner: cloudfoundry
     repository: go-buildpack
+    access_token: (( grab meta.github.access_token ))
+
+- name: ruby-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: ruby-buildpack
     access_token: (( grab meta.github.access_token ))
