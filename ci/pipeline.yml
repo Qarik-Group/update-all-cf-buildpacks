@@ -19,6 +19,7 @@ groups:
   jobs:
   - go-buildpack
   - ruby-buildpack
+  - java-buildpack
 
 jobs:
 - name: go-buildpack
@@ -68,6 +69,30 @@ jobs:
     params:
       rebase: true
       repository: pushme
+
+- name: java-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: java-buildpack, trigger: true }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: java-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: java-buildpack
+        BUILDPACK_NAME: java_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
 resources:
 - name: git
   type: git
@@ -90,4 +115,12 @@ resources:
   source:
     owner: cloudfoundry
     repository: ruby-buildpack
+    access_token: (( grab meta.github.access_token ))
+
+- name: java-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: java-buildpack
     access_token: (( grab meta.github.access_token ))
