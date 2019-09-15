@@ -1,0 +1,10 @@
+meta:
+  name: update-all-cf-buildpacks
+  target: ohio-cf
+  # url: https://ci2.starkandwayne.com team: starkandwayne
+
+  github:
+    owner: starkandwayne
+    repo: homebrew-cf
+    private_key: ((github-private-key))
+    access_token: ((github-access-token))

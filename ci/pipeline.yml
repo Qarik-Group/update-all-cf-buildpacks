@@ -1,0 +1,30 @@
+meta:
+  name:     (( param "Please name your pipeline" ))
+  pipeline: (( grab meta.name ))
+  target:   (( param "Please identify the name of the target Concourse CI" ))
+  image:
+    type: docker-image
+    source:
+      repository: starkandwayne/concourse
+
+  github:
+    uri:          (( concat "git@github.com:" meta.github.owner "/" meta.github.repo ))
+    owner:        (( param "Please specify the name of the user / organization that owns the Github repository" ))
+    repo:         (( param "Please specify the name of the Github repository" ))
+    branch:       master
+    private_key:  (( param "Please generate an SSH Deployment Key for this repo and specify it here" ))
+    access_token: (( param "Please generate a Personal Access Token and specify it here (read-only for repos, to avoid rate limiting)" ))
+
+jobs:
+- name: update
+  serial: true
+  plan:
+  - { get: go-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+
+resources:
+- name: go-buildpack
+  type: github-release
+  source:
+    owner: cloudfoundry
+    repository: go-buildpack
+    access_token: (( grab meta.github.access_token ))
