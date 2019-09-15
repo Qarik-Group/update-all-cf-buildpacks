@@ -30,30 +30,11 @@ jobs:
       - name: go-buildpack
       outputs:
       - name: pushme
+      params:
+        GITHUB_REPO: go-buildpack
+        BUILDPACK_NAME: go_buildpack
       run:
-        path: bash
-        args:
-        - -ce
-        - |
-          version=$(cat go-buildpack/version)
-          filename=$(basename $(ls go-buildpack/*.zip))
-          git clone git pushme
-          cd pushme
-          cat > update-only.sh <<SHELL
-          #!/bin/bash
-
-          cf update-buildpack -s cflinuxfs3 --enable go_buildpack -p https://github.com/cloudfoundry/go-buildpack/releases/download/v${version}/${filename}
-          SHELL
-          if [[ "$(git status -s)X" != "X" ]]; then
-            if [[ -z $(git config --global user.email) ]]; then
-              git config --global user.email "drnic+bot@starkandwayne.com"
-            fi
-            if [[ -z $(git config --global user.name) ]]; then
-              git config --global user.name "CI Bot"
-            fi
-            git add update-only.sh
-            git commit -m "Updated go-buildpack to v${version}"
-          fi
+        path: git/ci/scripts/update-buildpack.sh
   - put: git
     params:
       rebase: true
