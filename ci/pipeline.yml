@@ -68,6 +68,7 @@ resources:
 
 - name: go-buildpack
   type: github-release
+  check_every: 10m
   source:
     owner: cloudfoundry
     repository: go-buildpack
