@@ -1,0 +1,12 @@
+buildpack               position   enabled   locked   filename                                      stack
+staticfile_buildpack    1          true      false    staticfile_buildpack-cflinuxfs3-v1.4.40.zip   cflinuxfs3
+java_buildpack          2          true      false    java-buildpack-v4.21.zip                      cflinuxfs3
+ruby_buildpack          3          true      false    ruby-buildpack-cflinuxfs3-v1.7.43.zip         cflinuxfs3
+dotnet_core_buildpack   4          true      false    dotnet-core_buildpack-cflinuxfs3-v2.2.7.zip   cflinuxfs3
+nodejs_buildpack        5          true      false    nodejs_buildpack-cflinuxfs3-v1.6.45.zip       cflinuxfs3
+go_buildpack            6          true      false    go-buildpack-cflinuxfs3-v1.9.0.zip            cflinuxfs3
+python_buildpack        7          true      false    python_buildpack-cflinuxfs3-v1.6.29.zip       cflinuxfs3
+php_buildpack           8          true      false    php_buildpack-cflinuxfs3-v4.3.72.zip          cflinuxfs3
+nginx_buildpack         9          true      false    nginx_buildpack-cflinuxfs3-v1.0.9.zip         cflinuxfs3
+r_buildpack             10         true      false    r_buildpack-cflinuxfs3-v1.0.7.zip             cflinuxfs3
+binary_buildpack        11         true      false    binary_buildpack-cflinuxfs3-v1.0.31.zip       cflinuxfs3
