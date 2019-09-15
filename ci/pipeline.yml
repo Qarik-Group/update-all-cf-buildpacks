@@ -18,6 +18,7 @@ groups:
 - name: update-all-cf-buildpacks
   jobs:
   - binary-buildpack
+  - dotnet-core-buildpack
   - go-buildpack
   - ruby-buildpack
   - java-buildpack
@@ -40,6 +41,30 @@ jobs:
       params:
         GITHUB_REPO: binary-buildpack
         BUILDPACK_NAME: binary_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
+
+- name: dotnet-core-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: dotnet-core-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: dotnet-core-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: dotnet-core-buildpack
+        BUILDPACK_NAME: dotnet_core_buildpack
       run:
         path: git/ci/scripts/update-buildpack.sh
   - put: git
@@ -132,6 +157,14 @@ resources:
   source:
     owner: cloudfoundry
     repository: binary-buildpack
+    access_token: (( grab meta.github.access_token ))
+
+- name: dotnet-core-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: dotnet-core-buildpack
     access_token: (( grab meta.github.access_token ))
 
 - name: go-buildpack
