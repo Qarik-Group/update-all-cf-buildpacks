@@ -16,7 +16,7 @@ meta:
     access_token: (( param "Please generate a Personal Access Token and specify it here (read-only for repos, to avoid rate limiting)" ))
 
 jobs:
-- name: update
+- name: go-buildpack
   serial: true
   plan:
   - { get: git }
@@ -28,13 +28,36 @@ jobs:
       inputs:
       - name: git
       - name: go-buildpack
+      outputs:
+      - name: pushme
       run:
         path: bash
         args:
         - -ce
         - |
-          ls -alR
+          version=$(cat go-buildpack/version)
+          filename=$(basename $(ls go-buildpack/*.zip))
+          git clone git pushme
+          cd pushme
+          cat > update-only.sh <<SHELL
+          #!/bin/bash
 
+          cf update-buildpack -s cflinuxfs3 --enable go_buildpack -p https://github.com/cloudfoundry/go-buildpack/releases/download/v${version}/${filename}
+          SHELL
+          if [[ "$(git status -s)X" != "X" ]]; then
+            if [[ -z $(git config --global user.email) ]]; then
+              git config --global user.email "drnic+bot@starkandwayne.com"
+            fi
+            if [[ -z $(git config --global user.name) ]]; then
+              git config --global user.name "CI Bot"
+            fi
+            git add update-only.sh
+            git commit -m "Updated go-buildpack to v${version}"
+          fi
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
 resources:
 - name: git
   type: git
