@@ -19,9 +19,30 @@ jobs:
 - name: update
   serial: true
   plan:
+  - { get: git }
   - { get: go-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: go-buildpack
+      run:
+        path: bash
+        args:
+        - -ce
+        - |
+          ls -alR
 
 resources:
+- name: git
+  type: git
+  source:
+    uri:         (( grab meta.github.uri ))
+    branch:      (( grab meta.github.branch ))
+    private_key: (( grab meta.github.private_key ))
+
 - name: go-buildpack
   type: github-release
   source:
