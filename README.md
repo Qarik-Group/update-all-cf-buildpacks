@@ -5,5 +5,5 @@ As a Cloud Foundry platform operator, I want to ensure my users/developers alway
 ```plain
 # 1. cf login as an admin
 # 2. run this script
-curl -L | bash
+curl -L https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/update-only.sh | bash
 ```
