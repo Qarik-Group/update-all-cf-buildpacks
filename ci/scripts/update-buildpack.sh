@@ -11,11 +11,9 @@ filename=$(basename $(ls $GITHUB_REPO/*.zip))
 
 git clone git pushme
 cd pushme
-cat > update-only.sh <<SHELL
-#!/bin/bash
 
-cf update-buildpack -s cflinuxfs3 --enable $BUILDPACK_NAME -p https://github.com/$GITHUB_ORG/$GITHUB_REPO/releases/download/v${version}/${filename}
-SHELL
+sed -i "s%.*\b$BUILDPACK_NAME\n.*$%cf update-buildpack -s cflinuxfs3 --enable $BUILDPACK_NAME -p https://github.com/$GITHUB_ORG/$GITHUB_REPO/releases/download/v${version}/${filename}%" update-only.sh
+
 if [[ "$(git status -s)X" != "X" ]]; then
   if [[ -z $(git config --global user.email) ]]; then
     git config --global user.email "drnic+bot@starkandwayne.com"
