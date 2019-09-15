@@ -20,6 +20,7 @@ groups:
   - binary-buildpack
   - dotnet-core-buildpack
   - go-buildpack
+  - nginx-buildpack
   - ruby-buildpack
   - java-buildpack
 
@@ -89,6 +90,30 @@ jobs:
       params:
         GITHUB_REPO: go-buildpack
         BUILDPACK_NAME: go_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
+
+- name: nginx-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: nginx-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: nginx-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: nginx-buildpack
+        BUILDPACK_NAME: nginx_buildpack
       run:
         path: git/ci/scripts/update-buildpack.sh
   - put: git
@@ -173,6 +198,14 @@ resources:
   source:
     owner: cloudfoundry
     repository: go-buildpack
+    access_token: (( grab meta.github.access_token ))
+
+- name: nginx-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: nginx-buildpack
     access_token: (( grab meta.github.access_token ))
 
 - name: ruby-buildpack
