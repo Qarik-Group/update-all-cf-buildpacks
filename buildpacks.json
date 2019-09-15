@@ -1,0 +1,14 @@
+{
+  "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.33/binary-buildpack-cflinuxfs3-v1.0.33.zip",
+  "dotnet_core_buildpack": "https://github.com/cloudfoundry/dotnet-core-buildpack/releases/download/v2.2.14/dotnet-core-buildpack-cflinuxfs3-v2.2.14.zip",
+  "go_buildpack": "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.0/go-buildpack-cflinuxfs3-v1.9.0.zip",
+  "java_buildpack": "https://github.com/cloudfoundry/java-buildpack/releases/download/v4.21/java-buildpack-v4.21.zip",
+  "nginx_buildpack": "https://github.com/cloudfoundry/nginx-buildpack/releases/download/v1.0.18/nginx-buildpack-cflinuxfs3-v1.0.18.zip",
+  "nodejs_buildpack": "https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.56/nodejs-buildpack-cflinuxfs3-v1.6.56.zip",
+  "php_buildpack": "https://github.com/cloudfoundry/php-buildpack/releases/download/v4.3.82/php-buildpack-cflinuxfs3-v4.3.82.zip",
+  "python_buildpack": "https://github.com/cloudfoundry/python-buildpack/releases/download/v1.6.36/python-buildpack-cflinuxfs3-v1.6.36.zip",
+  "r_buildpack": "https://github.com/cloudfoundry/r-buildpack/releases/download/v1.0.13/r-buildpack-cflinuxfs3-v1.0.13.zip",
+  "ruby_buildpack": "https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.7.43/ruby-buildpack-cflinuxfs3-v1.7.43.zip",
+  "staticfile_buildpack": "https://github.com/cloudfoundry/staticfile-buildpack/releases/download/v1.4.44/staticfile-buildpack-cflinuxfs3-v1.4.44.zip",
+  "ignore_me": "so all other items can end with comma"
+}
