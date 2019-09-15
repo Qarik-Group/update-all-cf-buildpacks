@@ -31,7 +31,7 @@ groups:
 
 jobs:
 - name: binary-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: binary-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -55,7 +55,7 @@ jobs:
       repository: pushme
 
 - name: dotnet-core-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: dotnet-core-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -79,7 +79,7 @@ jobs:
       repository: pushme
 
 - name: go-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: go-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -103,7 +103,7 @@ jobs:
       repository: pushme
 
 - name: nginx-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: nginx-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -127,7 +127,7 @@ jobs:
       repository: pushme
 
 - name: nodejs-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: nodejs-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -151,7 +151,7 @@ jobs:
       repository: pushme
 
 - name: php-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: php-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -175,7 +175,7 @@ jobs:
       repository: pushme
 
 - name: python-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: python-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -199,7 +199,7 @@ jobs:
       repository: pushme
 
 - name: r-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: r-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -223,7 +223,7 @@ jobs:
       repository: pushme
 
 - name: ruby-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: ruby-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -247,7 +247,7 @@ jobs:
       repository: pushme
 
 - name: staticfile-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: staticfile-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
@@ -271,7 +271,7 @@ jobs:
       repository: pushme
 
 - name: java-buildpack
-  serial: true
+  public: true
   plan:
   - { get: git }
   - { get: java-buildpack, trigger: true }
