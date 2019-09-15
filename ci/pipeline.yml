@@ -17,11 +17,36 @@ meta:
 groups:
 - name: update-all-cf-buildpacks
   jobs:
+  - binary-buildpack
   - go-buildpack
   - ruby-buildpack
   - java-buildpack
 
 jobs:
+- name: binary-buildpack
+  serial: true
+  plan:
+  - { get: git }
+  - { get: binary-buildpack, trigger: true, params: {globs: ["*cflinuxfs3*.zip"]} }
+  - task: update-script
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      - name: binary-buildpack
+      outputs:
+      - name: pushme
+      params:
+        GITHUB_REPO: binary-buildpack
+        BUILDPACK_NAME: binary_buildpack
+      run:
+        path: git/ci/scripts/update-buildpack.sh
+  - put: git
+    params:
+      rebase: true
+      repository: pushme
+
 - name: go-buildpack
   serial: true
   plan:
@@ -100,6 +125,14 @@ resources:
     uri:         (( grab meta.github.uri ))
     branch:      (( grab meta.github.branch ))
     private_key: (( grab meta.github.private_key ))
+
+- name: binary-buildpack
+  type: github-release
+  check_every: 10m
+  source:
+    owner: cloudfoundry
+    repository: binary-buildpack
+    access_token: (( grab meta.github.access_token ))
 
 - name: go-buildpack
   type: github-release
