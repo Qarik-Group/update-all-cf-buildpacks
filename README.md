@@ -10,7 +10,7 @@ curl https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/ma
 
 ## Data only
 
-This project also curates a `buildpacks.json` file that contains the URLs for the latest buildpacks for each project:
+This project also curates a [`buildpacks.json`](https://github.com/starkandwayne/update-all-cf-buildpacks/blob/master/buildpacks.json) file that contains the URLs for the latest buildpacks for each project:
 
 ```plain
 curl https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/buildpacks.json
