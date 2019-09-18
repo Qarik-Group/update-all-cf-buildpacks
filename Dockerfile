@@ -7,6 +7,6 @@ RUN CF_CLI_VERSION=6.46.1 && \
   curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}&source=github-rel" | tar -C /usr/bin -xvz cf
 
 WORKDIR /workspace
-ADD . /workspace
+ADD update-only.sh /workspace
 
 CMD [ "./update-only.sh" ]
