@@ -12,8 +12,6 @@ spec:
       containers:
       - name: update
         image: starkandwayne/update-all-cf-buildpacks
-        # args:
-        #   - env
         env:
         - name: CF_SYSTEM_DOMAIN
           valueFrom:
@@ -31,11 +29,5 @@ spec:
             secretKeyRef:
               name: scf.var-cf-admin-password
               key: password
-      # hostAliases:
-      # - ip: "${api_ip}"
-      #   hostnames:
-      #   - "login.${cf_system_domain}"
-      #   - "api.${cf_system_domain}"
-      #   - "uaa.${cf_system_domain}"
-      #   - "doppler.${cf_system_domain}"
-      #   - "log-stream.${cf_system_domain}"
+        - name: ROUTER_IP_ENVVAR
+          value: SCF_ROUTER_0_SERVICE_HOST
