@@ -19,7 +19,7 @@ docker run -ti \
     -e CF_API=https://api.scf.suse.dev \
     -e CF_SKIP_SSL_VALIDATION=true \
     -e CF_USERNAME=admin \
-    -e CF_PASSWORD="$(kubectl get secret -n scf scf.var-cf-admin-password -o json | jq -r .data.password | base64 -D)" \
+    -e CF_PASSWORD="$(kubectl get secret -n scf scf.var-cf-admin-password -o json | jq -r .data.password | base64 --decode)" \
   starkandwayne/update-all-cf-buildpacks
 ```
 
