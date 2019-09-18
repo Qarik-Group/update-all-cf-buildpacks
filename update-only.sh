@@ -5,10 +5,11 @@ set -eu
 [[ -n "${ROUTER_IP_ENVVAR:-}" && -n "${CF_SYSTEM_DOMAIN:-}" ]] && {
   echo "Setting up /etc/hosts to *.${CF_SYSTEM_DOMAIN}..."
   eval "export router_ip=\"\$$ROUTER_IP_ENVVAR\"" # works on alpine
-
-  echo "${router_ip}  login.${CF_SYSTEM_DOMAIN}" >> /etc/hosts
-  echo "${router_ip}  api.${CF_SYSTEM_DOMAIN}" >> /etc/hosts
-  echo "${router_ip}  uaa.${CF_SYSTEM_DOMAIN}" >> /etc/hosts
+  {
+    echo "${router_ip}  login.${CF_SYSTEM_DOMAIN}"
+    echo "${router_ip}  api.${CF_SYSTEM_DOMAIN}"
+    echo "${router_ip}  uaa.${CF_SYSTEM_DOMAIN}"
+  } >> /etc/hosts
 }
 [[ -n "${CF_API:-}" ]] && {
   cf api $CF_API ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
