@@ -1,5 +1,17 @@
 #!/bin/bash
 
+set -eu
+
+[[ -n "${CF_API:-}" ]] && {
+  cf api $CF_API ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
+  cf auth ${CF_USERNAME:?required} ${CF_PASSWORD:?required} \
+    ${CF_CLIENT_CREDENTIALS:+--client-credentials}
+    #  \
+    # -o ${CF_ORGANIZATION:?required} \
+    # -s ${CF_SPACE:?required}
+}
+cf target
+
 # cf update-buildpack -s cflinuxfs3 --enable go_buildpack -p https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.0/go-buildpack-cflinuxfs3-v1.9.0.zip
 # cf update-buildpack -s cflinuxfs3 --enable ruby_buildpack -p https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.7.43/ruby-buildpack-cflinuxfs3-v1.7.43.zip
 # cf update-buildpack -s cflinuxfs3 --enable java_buildpack -p https://github.com/cloudfoundry/java-buildpack/releases/download/v4.21/java-buildpack-v4.21.zip
