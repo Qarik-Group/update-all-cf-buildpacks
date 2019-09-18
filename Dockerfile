@@ -9,4 +9,4 @@ RUN CF_CLI_VERSION=6.46.1 && \
 WORKDIR /workspace
 ADD . /workspace
 
-ENTRYPOINT [ "./update-only.sh" ]
+CMD [ "./update-only.sh" ]
