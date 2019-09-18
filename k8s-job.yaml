@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-all-cf-buildpacks
+spec:
+  template:
+    metadata:
+      labels:
+        app: update-all-cf-buildpacks
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: update
+        image: starkandwayne/update-all-cf-buildpacks
+        # args:
+        #   - env
+        env:
+        - name: CF_SYSTEM_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: scf.var-system-domain
+              key: value
+        - name: CF_API
+          value: https://api.$(CF_SYSTEM_DOMAIN)
+        - name: CF_SKIP_SSL_VALIDATION
+          value: "true"
+        - name: CF_USERNAME
+          value: admin
+        - name: CF_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: scf.var-cf-admin-password
+              key: password
+      # hostAliases:
+      # - ip: "${api_ip}"
+      #   hostnames:
+      #   - "login.${cf_system_domain}"
+      #   - "api.${cf_system_domain}"
+      #   - "uaa.${cf_system_domain}"
+      #   - "doppler.${cf_system_domain}"
+      #   - "log-stream.${cf_system_domain}"
