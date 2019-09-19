@@ -9,8 +9,13 @@ spec:
         app: update-all-cf-buildpacks
     spec:
       restartPolicy: OnFailure
+      serviceAccount: cf-operator
+      initContainers:
+      - name: wait-for-scf-router-service
+        image: starkandwayne/update-all-cf-buildpacks
+        command: ['./wait-for-scf-router-service.sh']
       containers:
-      - name: update
+      - name: update-buildpacks
         image: starkandwayne/update-all-cf-buildpacks
         env:
         - name: CF_SYSTEM_DOMAIN
