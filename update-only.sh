@@ -21,7 +21,6 @@ export POLLING=${POLLING:-5}
   export -f checkCFAPI
 
   waitForCloudFoundry() {
-    echo "waitForCloudFoundry"
     checkCFAPI && { echo "$CF_API already available"; return 0; }
     echo "Waiting for $CF_API for ${TIMEOUT}s:"
     until checkCFAPI; do
