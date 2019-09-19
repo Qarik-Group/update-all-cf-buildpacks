@@ -2,6 +2,9 @@
 
 set -eu
 
+export TIMEOUT=${TIMEOUT:-3600}
+export POLLING=${POLLING:-5}
+
 [[ -n "${ROUTER_IP_ENVVAR:-}" && -n "${CF_SYSTEM_DOMAIN:-}" ]] && {
   echo "Setting up /etc/hosts to *.${CF_SYSTEM_DOMAIN}..."
   eval "export router_ip=\"\$$ROUTER_IP_ENVVAR\"" # works on alpine
@@ -12,6 +15,25 @@ set -eu
   } >> /etc/hosts
 }
 [[ -n "${CF_API:-}" ]] && {
+  checkCFAPI() {
+    cf api "$CF_API" ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation} >/dev/null 2>&1
+  }
+  export -f checkCFAPI
+
+  waitForCloudFoundry() {
+    echo "waitForCloudFoundry"
+    checkCFAPI && { echo "$CF_API already available"; return 0; }
+    echo "Waiting for $CF_API for ${TIMEOUT}s:"
+    until checkCFAPI; do
+      printf "."
+      sleep ${POLLING}
+    done;
+  }
+
+  export -f waitForCloudFoundry
+  timeout ${TIMEOUT} bash -c waitForCloudFoundry
+
+  # Once more for the STDOUT messages
   cf api $CF_API ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
   cf auth ${CF_USERNAME:?required} ${CF_PASSWORD:?required} \
     ${CF_CLIENT_CREDENTIALS:+--client-credentials}
