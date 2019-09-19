@@ -16,7 +16,7 @@ For Cloud Foundry/Eirini/Quarks you can immediately and continously update your 
 kubectl apply -n scf -f https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/k8s-job.yaml
 ```
 
-You can install this immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running.
+You can install this immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running. **This job does not require external DNS to be setup yet.**
 
 Whilst `cf-operator` and `scf` deployments are coming up (which can take 20-40 minutes) the job has an init container that waits until the `scf-router-0` service is created:
 
@@ -50,6 +50,28 @@ scf-scheduler-v1-0               0/10    Init:7/19    0          108s
 scf-singleton-blobstore-v1-0     7/7     Running      0          112s
 scf-uaa-v1-0                     0/7     Init:7/13    0          113s
 update-all-cf-buildpacks-xclr5   1/1     Running      0          8m58s
+```
+
+Once Cloud Foundry is running, the job will update the buildpacks and complete:
+
+```plain
+NAME                                 READY   STATUS              RESTARTS   AGE
+pod/cf-operator-77767c7847-rl2xn     1/1     Running             0          29m
+pod/scf-adapter-v1-0                 5/5     Running             0          22m
+pod/scf-api-v1-0                     17/17   Running             6          22m
+pod/scf-bits-v1-0                    7/7     Running             0          22m
+pod/scf-cc-worker-v1-0               5/5     Running             6          22m
+pod/scf-database-v1-0                5/5     Running             0          22m
+pod/scf-diego-api-v1-0               6/6     Running             5          22m
+pod/scf-doppler-v1-0                 11/11   Running             0          22m
+pod/scf-eirini-v1-0                  6/6     Running             0          22m
+pod/scf-log-api-v1-0                 8/8     Running             0          22m
+pod/scf-nats-v1-0                    5/5     Running             0          22m
+pod/scf-router-v1-0                  6/6     Running             5          22m
+pod/scf-scheduler-v1-0               10/10   Running             12         22m
+pod/scf-singleton-blobstore-v1-0     7/7     Running             0          22m
+pod/scf-uaa-v1-0                     7/7     Running             0          22m
+pod/update-all-cf-buildpacks-xclr5   0/1     Completed           0          29m
 ```
 
 ## Docker
