@@ -8,15 +8,25 @@ As a Cloud Foundry platform operator, I want to ensure my users/developers alway
 curl https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/update-only.sh | bash
 ```
 
-## Kubernetes Job
+## Kubernetes Update Forever
 
-For Cloud Foundry/Eirini/Quarks you can immediately and continously update your buildpacks with a job and batch job. Install with `kubectl apply` or a Helm chart.
+For Cloud Foundry/Eirini/Quarks you can immediately and continously update your buildpacks with a job and subsequent cron job.
 
-```plain
-kubectl apply -n scf -f https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/k8s-job.yaml
-```
+Install with:
 
-You can install this immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running. **This job does not require external DNS to be setup yet.**
+* `kubectl apply` (hard coded to update buildpacks nightly at 1am)
+
+    ```plain
+    kubectl apply -n scf -f https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/k8s-update-forever.yaml
+    ```
+
+* A Helm chart (allows some settings overrides):
+
+    ```plain
+    helm upgrade --install --namespace scf update-all-cf-buildpacks helm/
+    ```
+
+You can install either of these immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running. **This job does not require external DNS to be setup yet.**
 
 Whilst `cf-operator` and `scf` deployments are coming up (which can take 20-40 minutes) the job has an init container that waits until the `scf-router-0` service is created:
 
