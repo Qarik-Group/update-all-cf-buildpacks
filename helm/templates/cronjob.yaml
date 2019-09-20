@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: update-all-cf-buildpacks
+spec:
+  schedule: "{{ .Values.job.cron.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccount: cf-operator
+          initContainers:
+          - name: wait-for-scf-router-service
+            image: starkandwayne/update-all-cf-buildpacks
+            command: ['./wait-for-scf-router-service.sh']
+          containers:
+          - name: update-buildpacks
+            image: starkandwayne/update-all-cf-buildpacks
+            env:
+            - name: CF_SYSTEM_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: scf.var-system-domain
+                  key: value
+            - name: CF_API
+              value: https://api.$(CF_SYSTEM_DOMAIN)
+            - name: CF_SKIP_SSL_VALIDATION
+              value: "true"
+            - name: CF_USERNAME
+              value: admin
+            - name: CF_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scf.var-cf-admin-password
+                  key: password
+            - name: ROUTER_IP_ENVVAR
+              value: SCF_ROUTER_0_SERVICE_HOST

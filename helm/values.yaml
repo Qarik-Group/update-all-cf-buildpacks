@@ -9,3 +9,9 @@ image:
   tag: latest
   pullPolicy: Always
   # pullPolicy: IfNotPresent
+
+job:
+  cron:
+    # Daily at 1am
+    # https://crontab.guru/#0_1_*_*_*
+    schedule: "0 1 * * *"

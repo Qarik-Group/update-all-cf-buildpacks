@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: update-all-cf-buildpacks
+  name: update-all-cf-buildpacks-now
 spec:
   template:
     metadata:
       labels:
-        app: update-all-cf-buildpacks
+        app: update-all-cf-buildpacks-now
     spec:
       restartPolicy: OnFailure
       serviceAccount: cf-operator
