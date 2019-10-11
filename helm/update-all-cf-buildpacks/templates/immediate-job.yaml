@@ -13,12 +13,12 @@ spec:
       initContainers:
       - name: wait-for-scf-router-service
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ['./wait-for-scf-router-service.sh']
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+        command: ['./wait-for-scf-router-service.sh']
       - name: wait-for-scf-api-ready
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ['./wait-for-cf-api-ready.sh']
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+        command: ['./wait-for-cf-api-ready.sh']
         env:
         - name: ROUTER_IP_ENVVAR
           value: SCF_ROUTER_0_SERVICE_HOST

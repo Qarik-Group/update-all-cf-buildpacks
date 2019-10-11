@@ -6,9 +6,6 @@ spec:
   schedule: "{{ .Values.job.cron.schedule }}"
   jobTemplate:
     spec:
-      metadata:
-        labels:
-          app: {{ template "fullname" . }}
       template:
         metadata:
           labels:

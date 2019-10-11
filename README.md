@@ -139,3 +139,9 @@ In another terminal, watch logs of the init and run containers:
 ```plain
 stern -n scf -l app=update-all-cf-buildpacks
 ```
+
+To update and test `k8s-update-forever.yaml`:
+
+```plain
+helm template helm/update-all-cf-buildpacks -n "" > k8s-update-forever.yaml
+```
