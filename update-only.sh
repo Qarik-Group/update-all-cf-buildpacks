@@ -14,31 +14,16 @@ export POLLING=${POLLING:-5}
     echo "${router_ip}  uaa.${CF_SYSTEM_DOMAIN}"
   } >> /etc/hosts
 }
+
 [[ -n "${CF_API:-}" ]] && {
-  checkCFAPI() {
-    cf api "$CF_API" ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation} >/dev/null 2>&1
-  }
-  export -f checkCFAPI
+  cf api \
+    "$CF_API" \
+    ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
 
-  waitForCloudFoundry() {
-    checkCFAPI && { echo "$CF_API already available"; return 0; }
-    echo "Waiting for $CF_API for ${TIMEOUT}s:"
-    until checkCFAPI; do
-      printf "."
-      sleep ${POLLING}
-    done;
-  }
-
-  export -f waitForCloudFoundry
-  timeout ${TIMEOUT} bash -c waitForCloudFoundry
-
-  # Once more for the STDOUT messages
-  cf api $CF_API ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
-  cf auth ${CF_USERNAME:?required} ${CF_PASSWORD:?required} \
+  cf auth \
+    "${CF_USERNAME:?required}" \
+    "${CF_PASSWORD:?required}" \
     ${CF_CLIENT_CREDENTIALS:+--client-credentials}
-    #  \
-    # -o ${CF_ORGANIZATION:?required} \
-    # -s ${CF_SPACE:?required}
 }
 cf target
 
