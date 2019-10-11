@@ -15,3 +15,7 @@ job:
     # Daily at 1am
     # https://crontab.guru/#0_1_*_*_*
     schedule: "0 1 * * *"
+    # Every minute
+    # schedule: "* * * * *"
+    # Every 2nd minute
+    # schedule: "*/2 * * * *"
