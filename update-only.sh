@@ -15,6 +15,7 @@ export POLLING=${POLLING:-5}
   } >> /etc/hosts
 }
 
+# TODO: move this into init container, and use $CF_HOME volume
 [[ -n "${CF_API:-}" ]] && {
   cf api \
     "$CF_API" \
