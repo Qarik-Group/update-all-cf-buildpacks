@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: "1.0"
+description: Regularly upgrade Cloud Foundry buildpacks
+name: update-all-cf-buildpacks
+version: 0.2.0
+icon: https://github.com/starkandwayne/update-all-cf-buildpacks/raw/master/helm/update-all-cf-buildpacks/starkandwayne-logo-blue.png
+maintainers:
+- name: Dr Nic Williams
+  email: drnicwilliams@gmail.com
+  url: https://github.com/drnic

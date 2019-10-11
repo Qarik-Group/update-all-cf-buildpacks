@@ -23,7 +23,9 @@ Install with:
 * A local Helm chart (allows some settings overrides):
 
     ```plain
-    helm upgrade --install --namespace scf update-all-cf-buildpacks helm/
+    helm upgrade --install --namespace scf \
+        update-all-cf-buildpacks \
+        helm/update-all-cf-buildpacks/
     ```
 
 * A remote Helm chart:
@@ -121,7 +123,8 @@ docker push drnic/update-all-cf-buildpacks:my-pull-request
 
 helm delete update-all-cf-buildpacks --purge
 helm upgrade --install --namespace scf \
-    update-all-cf-buildpacks helm/ \
+    update-all-cf-buildpacks \
+    helm/update-all-cf-buildpacks/ \
     --set "image.repository=drnic/update-all-cf-buildpacks" \
     --set "image.tag=my-pull-request"
 ```
