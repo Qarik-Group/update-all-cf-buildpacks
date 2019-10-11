@@ -1,21 +1,29 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: update-all-cf-buildpacks
+  name: {{ template "fullname" . }}
 spec:
   schedule: "{{ .Values.job.cron.schedule }}"
   jobTemplate:
     spec:
+      metadata:
+        labels:
+          app: {{ template "fullname" . }}
       template:
+        metadata:
+          labels:
+            app: {{ template "fullname" . }}
         spec:
           restartPolicy: OnFailure
           serviceAccount: cf-operator
           initContainers:
           - name: wait-for-scf-router-service
-            image: starkandwayne/update-all-cf-buildpacks
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             command: ['./wait-for-scf-router-service.sh']
           - name: wait-for-scf-api-ready
-            image: starkandwayne/update-all-cf-buildpacks
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             command: ['./wait-for-cf-api-ready.sh']
             env:
             - name: ROUTER_IP_ENVVAR
@@ -31,7 +39,8 @@ spec:
               value: "true"
           containers:
           - name: update-buildpacks
-            image: starkandwayne/update-all-cf-buildpacks
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             env:
             - name: ROUTER_IP_ENVVAR
               value: SCF_ROUTER_0_SERVICE_HOST
