@@ -20,10 +20,21 @@ Install with:
     kubectl apply -n scf -f https://raw.githubusercontent.com/starkandwayne/update-all-cf-buildpacks/master/k8s-update-forever.yaml
     ```
 
-* A Helm chart (allows some settings overrides):
+* A local Helm chart (allows some settings overrides):
 
     ```plain
     helm upgrade --install --namespace scf update-all-cf-buildpacks helm/
+    ```
+
+* A remote Helm chart:
+
+    ```plain
+    helm repo add starkandwayne https://helm.starkandwayne.com
+    helm repo update
+
+    helm upgrade --install \
+        starkandwayne/update-all-cf-buildpacks \
+        --namespace scf
     ```
 
 You can install either of these immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running. **This job does not require external DNS to be setup yet.**
