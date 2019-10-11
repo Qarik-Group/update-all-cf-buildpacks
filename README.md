@@ -118,13 +118,24 @@ The Concourse CI pipeline definition is in `ci/pipeline.yml`.
 To iterate on the scripts as a Helm chart, you will need to publish a Docker image, and set two `image.` values:
 
 ```plain
-docker build -t drnic/update-all-cf-buildpacks:my-pull-request .
-docker push drnic/update-all-cf-buildpacks:my-pull-request
+org=drnic
+tag=$(git branch | grep '^*' | awk '{print $2}')
+docker build -t "$org/update-all-cf-buildpacks:$tag" .
+docker push "$org/update-all-cf-buildpacks:$tag"
 
 helm delete update-all-cf-buildpacks --purge
 helm upgrade --install --namespace scf \
     update-all-cf-buildpacks \
     helm/update-all-cf-buildpacks/ \
-    --set "image.repository=drnic/update-all-cf-buildpacks" \
-    --set "image.tag=my-pull-request"
+    --set "image.repository=$org/update-all-cf-buildpacks" \
+    --set "image.tag=$tag" \
+    --set "job.cron.schedule=* * * * *"
+```
+
+Note, `job.cron.schedule` set to "every minute" to help testing `cronjob.yaml`.
+
+In another terminal, watch logs of the init and run containers:
+
+```plain
+stern -n scf -l app=update-all-cf-buildpacks
 ```
