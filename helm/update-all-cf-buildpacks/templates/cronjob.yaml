@@ -37,6 +37,18 @@ spec:
               value: https://api.$(CF_SYSTEM_DOMAIN)
             - name: CF_SKIP_SSL_VALIDATION
               value: "true"
+            - name: CF_USERNAME
+              value: admin
+            - name: CF_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scf.var-cf-admin-password
+                  key: password
+            - name: CF_HOME
+              value: /cfhome
+            volumeMounts:
+            - mountPath: /cfhome
+              name: cfhome
           containers:
           - name: update-buildpacks
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -53,10 +65,11 @@ spec:
               value: https://api.$(CF_SYSTEM_DOMAIN)
             - name: CF_SKIP_SSL_VALIDATION
               value: "true"
-            - name: CF_USERNAME
-              value: admin
-            - name: CF_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: scf.var-cf-admin-password
-                  key: password
+            - name: CF_HOME
+              value: /cfhome
+            volumeMounts:
+            - mountPath: /cfhome
+              name: cfhome
+          volumes:
+          - name: cfhome
+            emptyDir: {}

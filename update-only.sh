@@ -15,17 +15,6 @@ export POLLING=${POLLING:-5}
   } >> /etc/hosts
 }
 
-# TODO: move this into init container, and use $CF_HOME volume
-[[ -n "${CF_API:-}" ]] && {
-  cf api \
-    "$CF_API" \
-    ${CF_SKIP_SSL_VALIDATION:+--skip-ssl-validation}
-
-  cf auth \
-    "${CF_USERNAME:?required}" \
-    "${CF_PASSWORD:?required}" \
-    ${CF_CLIENT_CREDENTIALS:+--client-credentials}
-}
 cf target
 
 # cf update-buildpack -s cflinuxfs3 --enable go_buildpack -p https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.0/go-buildpack-cflinuxfs3-v1.9.0.zip
@@ -71,3 +60,5 @@ for buildpack_name in $buildpack_names; do
     fi
   fi
 done
+
+echo "Success."
