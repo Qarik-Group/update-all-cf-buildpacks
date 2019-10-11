@@ -99,3 +99,18 @@ The `update-only.sh` and `buildpacks.json` files are automatically updated via a
 * https://ci2.starkandwayne.com/teams/cfcommunity/pipelines/update-all-cf-buildpacks
 
 The Concourse CI pipeline definition is in `ci/pipeline.yml`.
+
+## Develop Helm
+
+To iterate on the scripts as a Helm chart, you will need to publish a Docker image, and set two `image.` values:
+
+```plain
+docker build -t drnic/update-all-cf-buildpacks:my-pull-request .
+docker push drnic/update-all-cf-buildpacks:my-pull-request
+
+helm delete update-all-cf-buildpacks --purge
+helm upgrade --install --namespace scf \
+    update-all-cf-buildpacks helm/ \
+    --set "image.repository=drnic/update-all-cf-buildpacks" \
+    --set "image.tag=my-pull-request"
+```
