@@ -346,7 +346,7 @@ jobs:
   plan:
   - do:
     - get: git
-      # passed: [test-c]
+      passed: [image-latest]
       trigger: true
     - get: version
       trigger: true
