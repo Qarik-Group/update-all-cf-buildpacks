@@ -14,11 +14,11 @@ spec:
       serviceAccount: cf-operator
       initContainers:
       - name: wait-for-scf-router-service
-        image: "starkandwayne/update-all-cf-buildpacks:latest"
+        image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
         imagePullPolicy: "Always"
         command: ['./wait-for-scf-router-service.sh']
       - name: wait-for-scf-api-ready
-        image: "starkandwayne/update-all-cf-buildpacks:latest"
+        image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
         imagePullPolicy: "Always"
         command: ['./wait-for-cf-api-ready.sh']
         env:
@@ -47,7 +47,7 @@ spec:
           name: cfhome
       containers:
       - name: update-buildpacks
-        image: "starkandwayne/update-all-cf-buildpacks:latest"
+        image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
         imagePullPolicy: "Always"
         env:
         - name: ROUTER_IP_ENVVAR
@@ -85,11 +85,11 @@ spec:
           serviceAccount: cf-operator
           initContainers:
           - name: wait-for-scf-router-service
-            image: "starkandwayne/update-all-cf-buildpacks:latest"
+            image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
             imagePullPolicy: "Always"
             command: ['./wait-for-scf-router-service.sh']
           - name: wait-for-scf-api-ready
-            image: "starkandwayne/update-all-cf-buildpacks:latest"
+            image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
             imagePullPolicy: "Always"
             command: ['./wait-for-cf-api-ready.sh']
             env:
@@ -118,7 +118,7 @@ spec:
               name: cfhome
           containers:
           - name: update-buildpacks
-            image: "starkandwayne/update-all-cf-buildpacks:latest"
+            image: "starkandwayne/update-all-cf-buildpacks:0.2.0"
             imagePullPolicy: "Always"
             env:
             - name: ROUTER_IP_ENVVAR
