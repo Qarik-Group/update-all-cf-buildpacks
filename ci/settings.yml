@@ -7,6 +7,10 @@ meta:
 
   initial_version: 0.2.0
 
+  git:
+    email:  ((git-commit-email))
+    name:   ((git-commit-name))
+
   github:
     owner: starkandwayne
     repo: update-all-cf-buildpacks

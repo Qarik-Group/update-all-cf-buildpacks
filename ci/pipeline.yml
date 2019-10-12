@@ -49,6 +49,7 @@ groups:
   - test-chart
   - pre
   - rc
+  - shipit
 - name: buildpacks
   jobs:
   - binary-buildpack
@@ -92,6 +93,72 @@ jobs:
       params: {}
       run:
         path: git/ci/scripts/test-chart.sh
+
+- name: shipit
+  public: true
+  serial: true
+  plan:
+  - do:
+    - { get: version, passed: [rc], params: {bump: final} }
+    - { get: git,     passed: [rc] }
+    - aggregate:
+      - task: package-chart
+        config:
+          platform: linux
+          image_resource: (( grab meta.image ))
+          inputs:
+            - name: version
+            - name: git
+          outputs:
+            - name: gh
+            - name: pushme
+            - name: notifications
+          run:
+            path: ./git/ci/scripts/shipit
+            args: []
+          params:
+            CHART_NAME:   (( grab meta.name ))
+            REPO_ROOT:    git
+            VERSION_FROM: version/number
+            RELEASE_ROOT: gh
+            REPO_OUT:     pushme
+            BRANCH:        (( grab meta.github.branch ))
+            GITHUB_OWNER:  (( grab meta.github.owner ))
+            GIT_EMAIL:      (( grab meta.git.email ))
+            GIT_NAME:       (( grab meta.git.name ))
+            NOTIFICATION_OUT: notifications
+            HELM_REPO_URI:  (( grab meta.chartmuseum.uri ))
+            HELM_REPO_USER: (( grab meta.chartmuseum.user))
+            HELM_REPO_PASS: (( grab meta.chartmuseum.pass))
+
+    - put: git
+      params:
+        rebase: true
+        repository: pushme
+    - put: github
+      params:
+        name:   gh/name
+        tag:    gh/tag
+        body:   gh/notes.md
+        globs: [gh/artifacts/*]
+    - put: version
+      params:
+        bump: patch
+    # - name: notify
+    #   aggregate:
+    #   - put: notify
+    #     params:
+    #       channel:  (( grab meta.slack.channel ))
+    #       username: (( grab meta.slack.username ))
+    #       icon_url: (( grab meta.slack.icon ))
+    #       text_file: notifications/message
+    on_failure:
+      put: notify
+      params:
+        channel:  (( grab meta.slack.channel ))
+        username: (( grab meta.slack.username ))
+        icon_url: (( grab meta.slack.icon ))
+        text:    '(( concat meta.slack.fail_url " " meta.pipeline ": shipit job failed" ))'
 
 - name: binary-buildpack
   public: true
@@ -597,6 +664,13 @@ resources:
   type: slack-notification
   source:
     url: (( grab meta.slack.webhook ))
+
+- name: github
+  type: github-release
+  source:
+    user:         (( grab meta.github.owner ))
+    repository:   (( grab meta.github.repo ))
+    access_token: (( grab meta.github.access_token ))
 
 resource_types:
   - name: slack-notification
