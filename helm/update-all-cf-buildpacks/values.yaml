@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: starkandwayne/update-all-cf-buildpacks
-  tag: 0.2.0
+  tag: latest
   pullPolicy: Always
   # pullPolicy: IfNotPresent
 

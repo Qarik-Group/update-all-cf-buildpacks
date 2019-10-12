@@ -34,9 +34,9 @@ Install with:
     helm repo add starkandwayne https://helm.starkandwayne.com
     helm repo update
 
-    helm upgrade --install \
-        starkandwayne/update-all-cf-buildpacks \
-        --namespace scf
+    helm upgrade --install --namespace scf \
+        update-all-cf-buildpacks \
+        starkandwayne/update-all-cf-buildpacks
     ```
 
 You can install either of these immediately after installing `cf-operator` and `scf` and it will patiently wait until Cloud Foundry is up and running. **This job does not require external DNS to be setup yet.**

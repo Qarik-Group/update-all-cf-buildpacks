@@ -63,10 +63,12 @@ tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
 sed -e "s/^version:.*$/version: ${VERSION}/g" helm/${CHART_NAME}/Chart.yaml > $tmpfile
 cp $tmpfile helm/${CHART_NAME}/Chart.yaml
 
-header "Bump docker image version in Values.yaml"
-tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
-sed -e "s/^  tag:.*$/  tag: ${VERSION}/g" helm/${CHART_NAME}/values.yaml > $tmpfile
-cp $tmpfile helm/${CHART_NAME}/values.yaml
+# TODO: see https://github.com/starkandwayne/update-all-cf-buildpacks/issues/8
+# 
+# header "Bump docker image version in Values.yaml"
+# tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
+# sed -e "s/^  tag:.*$/  tag: ${VERSION}/g" helm/${CHART_NAME}/values.yaml > $tmpfile
+# cp $tmpfile helm/${CHART_NAME}/values.yaml
 
 header "Update static install file"
 helm template helm/update-all-cf-buildpacks -n "" > k8s-update-forever.yaml
