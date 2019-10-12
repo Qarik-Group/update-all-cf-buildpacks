@@ -363,7 +363,8 @@ jobs:
   plan:
   - do:
     - get: git
-      passed: [image-latest, test-chart]
+      passed: [image-latest]
+      # passed: [image-latest, test-chart]
       trigger: true
     - get: version
       trigger: true
