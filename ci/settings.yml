@@ -2,9 +2,30 @@ meta:
   name: update-all-cf-buildpacks
   target: ohio-cf
   # url: https://ci2.starkandwayne.com team: starkandwayne
+  url:     https://ci2.starkandwayne.com
+  team:    cfcommunity
+
+  initial_version: 0.2.0
 
   github:
     owner: starkandwayne
     repo: update-all-cf-buildpacks
     private_key: ((github-private-key))
     access_token: ((github-access-token))
+
+  aws:
+    bucket:      (( grab meta.pipeline ))
+    region_name: us-east-2
+    access_key:  ((aws-access-key))
+    secret_key:  ((aws-secret-key))
+    charts_uri:  https://chartmuseum.starkandwayne.com
+
+  chartmuseum:
+    user: ((chartmuseum-user))
+    pass: ((chartmuseum-pass))
+
+  slack:
+    webhook:       ((slack-webhook))
+    username:      ((slack-username))
+    icon:          ((slack-icon-url))
+    channel:       "#update-all-cf-buildpacks"
