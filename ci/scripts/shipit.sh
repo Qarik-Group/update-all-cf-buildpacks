@@ -67,14 +67,10 @@ header "Bump docker image version in Values.yaml"
 tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
 sed -e "s/^  tag:.*$/  tag: ${VERSION}/g" helm/${CHART_NAME}/values.yaml > $tmpfile
 cp $tmpfile helm/${CHART_NAME}/values.yaml
-)
 
-header "Install helm CLI"
-curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz
-tar xfz helm-*.tar.gz
-mv linux-amd64/helm  /usr/local/bin
-helm version --client
-helm init --client-only
+header "Update static install file"
+helm template helm/update-all-cf-buildpacks -n "" > k8s-update-forever.yaml
+)
 
 header "Build helm chart"
 mkdir -p ${RELEASE_ROOT}/artifacts
