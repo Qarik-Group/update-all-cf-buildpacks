@@ -114,7 +114,7 @@ jobs:
             - name: pushme
             - name: notifications
           run:
-            path: ./git/ci/scripts/shipit
+            path: ./git/ci/scripts/shipit.sh
             args: []
           params:
             CHART_NAME:   (( grab meta.name ))
