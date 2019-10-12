@@ -1,5 +1,4 @@
 apiVersion: v1
-appVersion: "1.0"
 description: Regularly upgrade Cloud Foundry buildpacks
 name: update-all-cf-buildpacks
 version: 0.2.0
