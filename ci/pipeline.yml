@@ -46,6 +46,7 @@ groups:
 - name: update-all-cf-buildpacks
   jobs:
   - image-latest
+  - test-chart
   - pre
   - rc
 - name: buildpacks
@@ -71,10 +72,26 @@ jobs:
 - name: image-latest
   public: true
   plan:
-  - { get: git, trigger: true }
+  - get: git
+    trigger: true
   - put: image-latest
     params:
       build: git
+
+- name: test-chart
+  public: true
+  plan:
+  - get: git
+    trigger: true
+  - task: test-chart
+    config:
+      platform: linux
+      image_resource: (( grab meta.image ))
+      inputs:
+      - name: git
+      params: {}
+      run:
+        path: git/ci/scripts/test-chart.sh
 
 - name: binary-buildpack
   public: true
@@ -346,7 +363,7 @@ jobs:
   plan:
   - do:
     - get: git
-      passed: [image-latest]
+      passed: [image-latest, test-chart]
       trigger: true
     - get: version
       trigger: true
