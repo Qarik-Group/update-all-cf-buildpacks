@@ -46,6 +46,10 @@ groups:
 - name: update-all-cf-buildpacks
   jobs:
   - image-latest
+  - pre
+  - rc
+- name: buildpacks
+  jobs:
   - binary-buildpack
   - dotnet-core-buildpack
   - go-buildpack
@@ -57,8 +61,6 @@ groups:
   - ruby-buildpack
   - staticfile-buildpack
   - java-buildpack
-  - pre
-  - rc
 - name: versioning
   jobs:
   - major
