@@ -78,6 +78,7 @@ jobs:
   - put: image-latest
     params:
       build: git
+      cache: true
 
 - name: test-chart
   public: true
