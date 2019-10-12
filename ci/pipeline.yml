@@ -6,7 +6,7 @@ meta:
   image:
     type: docker-image
     source:
-      name: starkandwayne/concourse-kubernetes
+      repository: starkandwayne/concourse-kubernetes
       tag: latest
 
   github:
@@ -28,7 +28,7 @@ meta:
     secret_key: (( param "Please set your AWS Secret Key ID" ))
 
   chartmuseum:
-    uri: https://chartmuseum.starkandwayne.com
+    uri: https://helm.starkandwayne.com
     user: (( param "Please provide basic auth user for chartmuseum" ))
     pass: (( param "Please provide basic auth password for chartmuseum" ))
 
@@ -430,19 +430,14 @@ jobs:
   plan:
   - do:
     - get: git
-      passed: [image-latest]
-      # passed: [image-latest, test-chart]
+      passed: [image-latest, test-chart]
       trigger: true
     - get: version
       trigger: true
     - task: release-notes
       config:
         platform: linux
-        image_resource:
-          type: docker-image
-          source:
-            repository: (( grab meta.image.source.name ))
-            tag:        (( grab meta.image.source.tag ))
+        image_resource: (( grab meta.image ))
         run:
           path: sh
           args:
@@ -484,13 +479,9 @@ jobs:
     - task: release-notes
       config:
         platform: linux
-        image_resource:
-          type: docker-image
-          source:
-            repository: (( grab meta.image.source.name ))
-            tag:        (( grab meta.image.source.tag ))
+        image_resource: (( grab meta.image ))
         inputs:
-            - { name: git }
+        - { name: git }
         run:
           path: sh
           args:
