@@ -27,7 +27,7 @@ cflinuxfs3_buildpacks=$(cat <<-JSON
   "go_buildpack": "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.3/go-buildpack-cflinuxfs3-v1.9.3.zip",
   "java_buildpack": "https://github.com/cloudfoundry/java-buildpack/releases/download/v4.26/java-buildpack-v4.26.zip",
   "nginx_buildpack": "https://github.com/cloudfoundry/nginx-buildpack/releases/download/v1.1.1/nginx-buildpack-cflinuxfs3-v1.1.1.zip",
-  "nodejs_buildpack": "https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.3/nodejs-buildpack-cflinuxfs3-v1.7.3.zip",
+  "nodejs_buildpack": "https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.4/nodejs-buildpack-cflinuxfs3-v1.7.4.zip",
   "php_buildpack": "https://github.com/cloudfoundry/php-buildpack/releases/download/v4.4.2/php-buildpack-cflinuxfs3-v4.4.2.zip",
   "python_buildpack": "https://github.com/cloudfoundry/python-buildpack/releases/download/v1.7.2/python-buildpack-cflinuxfs3-v1.7.2.zip",
   "r_buildpack": "https://github.com/cloudfoundry/r-buildpack/releases/download/v1.1.0/r-buildpack-cflinuxfs3-v1.1.0.zip",
