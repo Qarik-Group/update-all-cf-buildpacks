@@ -30,7 +30,7 @@ cflinuxfs3_buildpacks=$(cat <<-JSON
   "nodejs_buildpack": "https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.7.7/nodejs-buildpack-cflinuxfs3-v1.7.7.zip",
   "php_buildpack": "https://github.com/cloudfoundry/php-buildpack/releases/download/v4.4.3/php-buildpack-cflinuxfs3-v4.4.3.zip",
   "python_buildpack": "https://github.com/cloudfoundry/python-buildpack/releases/download/v1.7.4/python-buildpack-cflinuxfs3-v1.7.4.zip",
-  "r_buildpack": "https://github.com/cloudfoundry/r-buildpack/releases/download/v1.1.0/r-buildpack-cflinuxfs3-v1.1.0.zip",
+  "r_buildpack": "https://github.com/cloudfoundry/r-buildpack/releases/download/v1.1.1/r-buildpack-cflinuxfs3-v1.1.1.zip",
   "ruby_buildpack": "https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.4/ruby-buildpack-cflinuxfs3-v1.8.4.zip",
   "staticfile_buildpack": "https://github.com/cloudfoundry/staticfile-buildpack/releases/download/v1.5.2/staticfile-buildpack-cflinuxfs3-v1.5.2.zip",
   "ignore_me": "so all other items can end with comma"
