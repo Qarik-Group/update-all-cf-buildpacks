@@ -14,21 +14,21 @@ spec:
           restartPolicy: OnFailure
           serviceAccount: cf-operator
           initContainers:
-          - name: wait-for-scf-router-service
+          - name: wait-for-kubecf-router-service
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-            command: ['./wait-for-scf-router-service.sh']
-          - name: wait-for-scf-api-ready
+            command: ['./wait-for-kubecf-router-service.sh']
+          - name: wait-for-kubecf-api-ready
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             command: ['./wait-for-cf-api-ready.sh']
             env:
             - name: ROUTER_IP_ENVVAR
-              value: SCF_ROUTER_0_SERVICE_HOST
+              value: KUBECF_ROUTER_0_SERVICE_HOST
             - name: CF_SYSTEM_DOMAIN
               valueFrom:
                 secretKeyRef:
-                  name: scf.var-system-domain
+                  name: kubecf.var-system-domain
                   key: value
             - name: CF_API
               value: https://api.$(CF_SYSTEM_DOMAIN)
@@ -39,7 +39,7 @@ spec:
             - name: CF_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: scf.var-cf-admin-password
+                  name: kubecf.var-cf-admin-password
                   key: password
             - name: CF_HOME
               value: /cfhome
@@ -52,11 +52,11 @@ spec:
             imagePullPolicy: "{{ .Values.image.pullPolicy }}"
             env:
             - name: ROUTER_IP_ENVVAR
-              value: SCF_ROUTER_0_SERVICE_HOST
+              value: KUBECF_ROUTER_0_SERVICE_HOST
             - name: CF_SYSTEM_DOMAIN
               valueFrom:
                 secretKeyRef:
-                  name: scf.var-system-domain
+                  name: kubecf.var-system-domain
                   key: value
             - name: CF_API
               value: https://api.$(CF_SYSTEM_DOMAIN)

@@ -5,8 +5,8 @@ set -eu
 export TIMEOUT=${TIMEOUT:-1800}
 export POLLING=${POLLING:-5}
 
-export SERVICE_NAME=${SERVICE_NAME:-"scf-router-0"}
-export NAMESPACE=${NAMESPACE:-"scf"}
+export SERVICE_NAME=${SERVICE_NAME:-"kubecf-router-0"}
+export NAMESPACE=${NAMESPACE:-"kubecf"}
 : ${KUBERNETES_SERVICE_HOST:?this script is assumed to be run inside a k8s pod}
 
 checkSvcExists() {
