@@ -1,8 +1,8 @@
 meta:
   name: update-all-cf-buildpacks
-  target: ohio-cf
+  target: pipes@cfcommunity
   # url: https://ci2.starkandwayne.com team: starkandwayne
-  url:     https://ci2.starkandwayne.com
+  url:     https://pipes.starkandwayne.com
   team:    cfcommunity
 
   initial_version: 0.2.0
@@ -17,18 +17,22 @@ meta:
     private_key: ((github-private-key))
     access_token: ((github-access-token))
 
+  dockerhub:
+    username: ((docker-hub.username))
+    password: ((docker-hub.password))
+
   aws:
     bucket:      (( grab meta.pipeline ))
     region_name: us-east-2
-    access_key:  ((aws-access-key))
-    secret_key:  ((aws-secret-key))
+    access_key:  ((aws-cfcommunity.access))
+    secret_key:  ((aws-cfcommunity.secret))
 
   chartmuseum:
-    user: ((chartmuseum-user))
-    pass: ((chartmuseum-pass))
+    user: ((chartmuseum.username))
+    pass: ((chartmuseum.password))
 
   slack:
-    webhook:       ((slack-webhook))
-    username:      ((slack-username))
-    icon:          ((slack-icon-url))
+    webhook:       ((slack.webhook))
+    username:      ((slack.username))
+    icon:          ((slack-icon))
     channel:       "#update-all-cf-buildpacks"

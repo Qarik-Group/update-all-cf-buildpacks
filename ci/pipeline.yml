@@ -102,7 +102,7 @@ jobs:
   - do:
     - { get: version, passed: [rc], params: {bump: final} }
     - { get: git,     passed: [rc] }
-    - aggregate:
+    - in_parallel:
       - task: package-chart
         config:
           platform: linux
@@ -146,7 +146,7 @@ jobs:
       params:
         bump: patch
     # - name: notify
-    #   aggregate:
+    #   in_parallel:
     #   - put: notify
     #     params:
     #       channel:  (( grab meta.slack.channel ))
