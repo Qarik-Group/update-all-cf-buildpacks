@@ -23,7 +23,7 @@ cf target
 cflinuxfs3_buildpacks=$(cat <<-JSON
 {
   "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.39/binary-buildpack-cflinuxfs3-v1.0.39.zip",
-  "dotnet_core_buildpack": "https://github.com/cloudfoundry/dotnet-core-buildpack/releases/download/v2.3.30/dotnet-core-buildpack-cflinuxfs3-v2.3.30.zip",
+  "dotnet_core_buildpack": "https://github.com/cloudfoundry/dotnet-core-buildpack/releases/download/v2.3.31/dotnet-core-buildpack-cflinuxfs3-v2.3.31.zip",
   "go_buildpack": "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.33/go-buildpack-cflinuxfs3-v1.9.33.zip",
   "java_buildpack": "https://github.com/cloudfoundry/java-buildpack/releases/download/v4.39/java-buildpack-v4.39.zip",
   "nginx_buildpack": "https://github.com/cloudfoundry/nginx-buildpack/releases/download/v1.1.28/nginx-buildpack-cflinuxfs3-v1.1.28.zip",
