@@ -9,6 +9,6 @@
   "python_buildpack": "https://github.com/cloudfoundry/python-buildpack/releases/download/v1.7.48/python-buildpack-cflinuxfs3-v1.7.48.zip",
   "r_buildpack": "https://github.com/cloudfoundry/r-buildpack/releases/download/v1.1.25/r-buildpack-cflinuxfs3-v1.1.25.zip",
   "ruby_buildpack": "https://github.com/cloudfoundry/ruby-buildpack/releases/download/v1.8.48/ruby-buildpack-cflinuxfs3-v1.8.48.zip",
-  "staticfile_buildpack": "https://github.com/cloudfoundry/staticfile-buildpack/releases/download/v1.5.26/staticfile-buildpack-cflinuxfs3-v1.5.26.zip",
+  "staticfile_buildpack": "https://github.com/cloudfoundry/staticfile-buildpack/releases/download/v1.5.27/staticfile-buildpack-cflinuxfs3-v1.5.27.zip",
   "ignore_me": "so all other items can end with comma"
 }
