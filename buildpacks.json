@@ -1,5 +1,5 @@
 {
-  "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.42/binary-buildpack-cflinuxfs3-v1.0.42.zip",
+  "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.43/binary-buildpack-cflinuxfs3-v1.0.43.zip",
   "dotnet_core_buildpack": "https://github.com/cloudfoundry/dotnet-core-buildpack/releases/download/v2.3.40/dotnet-core-buildpack-cflinuxfs3-v2.3.40.zip",
   "go_buildpack": "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.41/go-buildpack-cflinuxfs3-v1.9.41.zip",
   "java_buildpack": "https://github.com/cloudfoundry/java-buildpack/releases/download/v4.48.2/java-buildpack-v4.48.2.zip",
