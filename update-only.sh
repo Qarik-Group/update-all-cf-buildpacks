@@ -22,7 +22,7 @@ cf target
 # cf update-buildpack -s cflinuxfs3 --enable java_buildpack -p https://github.com/cloudfoundry/java-buildpack/releases/download/v4.21/java-buildpack-v4.21.zip
 cflinuxfs3_buildpacks=$(cat <<-JSON
 {
-  "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.46/binary-buildpack-cflinuxfs3-v1.0.46.zip",
+  "binary_buildpack": "https://github.com/cloudfoundry/binary-buildpack/releases/download/v1.0.47/binary-buildpack-cflinuxfs3-v1.0.47.zip",
   "dotnet_core_buildpack": "https://github.com/cloudfoundry/dotnet-core-buildpack/releases/download/v2.4.1/dotnet-core-buildpack-cflinuxfs3-v2.4.1.zip",
   "go_buildpack": "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.9.50/go-buildpack-cflinuxfs3-v1.9.50.zip",
   "java_buildpack": "https://github.com/cloudfoundry/java-buildpack/releases/download/v4.52/java-buildpack-v4.52.zip",
